@@ -1,11 +1,15 @@
 import React , {useState} from 'react'
 import { NavLink, Link } from 'react-router-dom';
 import {FaBarsStaggered, FaXmark} from 'react-icons/fa6';
+import { useAuth0  } from '@auth0/auth0-react';
+
+
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleMenuToggle =()=>{
         setIsMenuOpen(!isMenuOpen)
     };
+    const {loginWithRedirect, logout, isAuthenticated} =useAuth0();
     const navItems=[
         {path:"/SearchStudyMate", title: "Search Studymates"},
         {path:"/forum", title: "Forum"},
@@ -38,8 +42,13 @@ const Navbar = () => {
                 }
             </ul>
             <div className="text-base text-primary font-medium space-x-5 hidden lg:block"> 
-                <Link to="/login" className='py-2 px-5 border rounded'>Log in</Link>
-                <Link to="/sign-up" className='py-2 px-5 border rounded bg-blue text-white'>Sign up</Link>
+            {isAuthenticated ? (
+            <li>
+                <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log Out</button>
+            </li>) 
+            : (<li>
+                <button onClick={() => loginWithRedirect()} className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log In</button>
+            </li>)}
             </div>
             {/* for mobile */}
             <div className="md:hidden block ">
