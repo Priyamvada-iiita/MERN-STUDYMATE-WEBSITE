@@ -28,6 +28,7 @@ async function run() {
     //create db
     const db = client.db("mernStudymatePosts");
     const studymateCollections = db.collection("demoStudymatePosts") ;
+    const forumPostCollections = db.collection("demoforumposts") ;
     //post a post
     app.post("/post-studymatepost", async(req, res)=>{
       const body = req.body;
@@ -50,6 +51,27 @@ async function run() {
       const studymateposts = await studymateCollections.find().toArray()
       res.send(studymateposts);
     })
+    app.post("/post-forum", async(req, res)=>{
+      const body = req.body;
+      body.createAt = new Date();
+      // console.log(body)
+      const result = await forumPostCollections.insertOne(body);
+      if(result.insertedId){
+        return res.status(200).send(result);
+      }
+      else{
+        return res.status(404).send({
+          message: "canot insert ",
+          status :false
+        })
+      }
+    })
+
+
+    app.get("/forum-posts", async(req, res)=>{
+      const forumposts = await forumPostCollections.find().toArray()
+      res.send(forumposts);
+    })
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -65,27 +87,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-// Get latest forum posts
-app.get('/api/forum', async (req, res) => {
-  try {
-    const posts = await ForumPost.find().sort({ createdAt: -1 }).limit(10);
-    res.json(posts);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Post a new forum message
-app.post('/api/forum', async (req, res) => {
-  const { username, userId, message } = req.body;
-  const post = new ForumPost({ username, userId, message });
-  try {
-    await post.save();
-    res.status(201).json(post);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
