@@ -4,14 +4,9 @@ const app = express();
 const port = process.env.PORT || 3000 ;
 const cors = require('cors');
 require('dotenv').config()
-console.log(process.env.DB_USER)
-console.log(process.env.DB_PASSWORD)
+
 app.use(express.json())
 app.use(cors())  
-
-//username priyadarshanipriyamvada
-//password   8DnnK96ml0hcLM8U
-// 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@studymate-cluster.o9a4yn2.mongodb.net/?retryWrites=true&w=majority&appName=studymate-cluster`;
@@ -70,6 +65,27 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+// Get latest forum posts
+app.get('/api/forum', async (req, res) => {
+  try {
+    const posts = await ForumPost.find().sort({ createdAt: -1 }).limit(10);
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Post a new forum message
+app.post('/api/forum', async (req, res) => {
+  const { username, userId, message } = req.body;
+  const post = new ForumPost({ username, userId, message });
+  try {
+    await post.save();
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
