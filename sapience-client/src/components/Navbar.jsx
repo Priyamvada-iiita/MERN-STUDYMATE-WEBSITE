@@ -2,13 +2,15 @@ import React , {useState} from 'react'
 import { NavLink, Link } from 'react-router-dom';
 import {FaBarsStaggered, FaXmark} from 'react-icons/fa6';
 import { useAuth0  } from '@auth0/auth0-react';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleMenuToggle =()=>{
         setIsMenuOpen(!isMenuOpen)
     };
+    const navigate = useNavigate(); // Initialize the navigate function
+
     const {loginWithRedirect, logout, isAuthenticated} =useAuth0();
     const navItems=[
         {path:"/SearchStudyMate", title: "Search Studymates"},
@@ -18,6 +20,16 @@ const Navbar = () => {
         {path:"/chat", title: "Chatroom"},
     
     ]
+  
+
+    const handleNavLinkClick = (path) => {
+        if (!isAuthenticated) {
+            loginWithRedirect();
+        } else {
+            navigate(path); // Navigate to the path if authenticated
+        }
+    };
+
   return (
     <header className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
         <nav className="flex justify-between items-center py-6">
@@ -25,21 +37,13 @@ const Navbar = () => {
                 <path d="M4 19.5a2.5 2.5 0 0 1 2.5-2.5H20m-13.5 0A2.5 2.5 0 0 0 4 22V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3.5Z"></path></svg><span>Studymate Portal</span>
             </a>
             <ul className="hidden md:flex gap-12">
-                {
-                    navItems.map(({path, title})=>(
+            {navItems.map(({ path, title }) => (
                         <li key={path} className="text-base text-primary">
-                            <NavLink
-                            to={path}
-                            className={({ isActive }) =>
-                                isActive ? "active" : ""
-                            }
-                            >
-                            {title}
-                            </NavLink>
-
+                            <button onClick={() => handleNavLinkClick(path)} className="text-inherit focus:outline-none">
+                                {title}
+                            </button>
                         </li>
-                    ))
-                }
+                    ))}
             </ul>
             <div className="text-base text-primary font-medium space-x-5 hidden lg:block"> 
             {isAuthenticated ? (
@@ -61,21 +65,13 @@ const Navbar = () => {
         </nav>   
         <div className={`px-4 bg-black py-5 rounded-sm ${isMenuOpen? "":"hidden"}`}>
             <ul >
-                {
-                    navItems.map(({path, title})=>(
-                        <li key={path} className="text-base text-white first:text-white py-1">
-                            <NavLink
-                            to="/messages"
-                            className={({ isActive }) =>
-                                isActive ? "active" : ""
-                            }
-                            >
-                            {title}
-                            </NavLink>
-
+            {navItems.map(({ path, title }) => (
+                        <li key={path} className="text-base text-primary">
+                            <button onClick={() => handleNavLinkClick(path)} className="text-inherit focus:outline-none">
+                                {title}
+                            </button>
                         </li>
-                    ))
-                }
+                    ))}
                 <li>
                     <Link to="/login" className='text-white py-1'>Log in</Link>
                     {/* <Link to="/signup" className='text-white py-1'>Sign up</Link> */}
