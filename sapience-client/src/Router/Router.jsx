@@ -8,6 +8,9 @@ import LandingPage from "../Pages/LandingPage";
 import Forum from "../Pages/Forum";
 import BrowseVenue from "../Pages/BrowseVenue";
 import PostingForm from "../Pages/PostingForm";
+import Login from "../Pages/Login";
+import Signup from "../Pages/Signup";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,11 +18,13 @@ const router = createBrowserRouter([
     children: [
         {path:"/", element:<LandingPage/>},
         {path:"/SearchStudyMate", element:<Home/>},
-        {path:"/forum", element: <Forum/> },,
+        {path:"/forum", element: <Forum/> },
         {path:"/venue", element: <BrowseVenue/>},
         {path:"/post-listing", element: <PostingForm/>},
         // {path:"/chat", element:<Chatroo/>},
-        {path:"/about", element:<About/>}
+        {path:"/about", element:<About/>},
+        {path:"/login", element:<Login/>},
+        {path:"/signup", element:<Signup/>},
     ]
   },
 ]);

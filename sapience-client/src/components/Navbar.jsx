@@ -1,7 +1,7 @@
 import React , {useState} from 'react'
 import { NavLink, Link } from 'react-router-dom';
 import {FaBarsStaggered, FaXmark} from 'react-icons/fa6';
-import { useAuth0  } from '@auth0/auth0-react';
+import Login from '../Pages/Login';
 
 
 const Navbar = () => {
@@ -9,7 +9,6 @@ const Navbar = () => {
     const handleMenuToggle =()=>{
         setIsMenuOpen(!isMenuOpen)
     };
-    const {loginWithRedirect, logout, isAuthenticated} =useAuth0();
     const navItems=[
         {path:"/SearchStudyMate", title: "Search Studymates"},
         {path:"/forum", title: "Forum"},
@@ -42,13 +41,10 @@ const Navbar = () => {
                 }
             </ul>
             <div className="text-base text-primary font-medium space-x-5 hidden lg:block"> 
-            {isAuthenticated ? (
-            <li>
-                <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log Out</button>
-            </li>) 
-            : (<li>
-                <button onClick={() => loginWithRedirect()} className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log In</button>
-            </li>)}
+            {/* <button type="submit" className='bg-blue py-2 px-8 text-white md:rounded-none rounded'><Login/></button> */}
+            
+            <a href="/login" className=" bg-blue py-2 px-8 text-white md:rounded-none rounded">Login</a>
+        
             </div>
             {/* for mobile */}
             <div className="md:hidden block ">
@@ -77,8 +73,7 @@ const Navbar = () => {
                     ))
                 }
                 <li>
-                    <Link to="/login" className='text-white py-1'>Log in</Link>
-                    {/* <Link to="/signup" className='text-white py-1'>Sign up</Link> */}
+                <button type="link" className='bg-blue py-2 px-8 text-white md:rounded-none rounded'>Search</button>
                 </li>
                 
             </ul>
