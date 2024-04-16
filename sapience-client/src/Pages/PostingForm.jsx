@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { useForm,useFieldArray, Controller } from 'react-hook-form';
 import CreateableSelect from "react-select/creatable"
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const PostingForm = () => {
     const [selectedInterest, setSelectedInterest] =useState(null);
@@ -93,6 +95,8 @@ const PostingForm = () => {
 
     
     return (
+        <>
+        <Navbar/>
         <div className='max-w-screen-2xl container mx-auto xl:px-24 px-4'>
             <h2 className="text-3xl font-bold mb-4 py-2">Create New StudyMate Posting</h2>
             <div className='bg-[#FAFAFA] py-10px-4 lg:px-16'>
@@ -249,6 +253,8 @@ const PostingForm = () => {
             </form>
             </div>
         </div>
+        <Footer/>
+        </>
     );
 }
 

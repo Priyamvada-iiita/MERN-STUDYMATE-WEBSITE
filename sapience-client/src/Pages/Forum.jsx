@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Forum = () => {
   const [posts, setPosts] = useState([]);
@@ -62,6 +64,8 @@ const Forum = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
+    <>
+    <Navbar/>
     <div className="container mx-auto p-4">
       <h2 className="text-3xl font-bold mb-4">Forum Posts</h2>
       <div>
@@ -102,6 +106,8 @@ const Forum = () => {
       </div>
     
     </div>
+    <Footer/>
+    </>
   );
 };
 

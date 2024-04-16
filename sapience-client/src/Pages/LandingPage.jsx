@@ -1,7 +1,12 @@
 import React from 'react';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+
 
 const LandingPage = () => {
   return (
+    <>
+    <Navbar/>
     <div>
       {/* Hero Banner */}
       <div className="h-screen flex flex-col justify-center items-center bg-cover bg-center text-center" style={{ backgroundImage: "url('https://source.unsplash.com/1600x900/?technology')" }}>
@@ -53,6 +58,8 @@ const LandingPage = () => {
         <button className="mt-4 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition duration-300">Join Now</button>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
 

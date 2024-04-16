@@ -3,6 +3,8 @@ import Banner from '../components/Banner'
 import Cards from '../components/Cards';
 import StudyMateListsing from './StudyMateListsing';
 import Sidebar from '../sidebar/Sidebar';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer'
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] =useState(null);
@@ -102,6 +104,7 @@ const itemsPerPage = 6;
   // console.log(results)
   return (
     <div className=''>
+      <Navbar/>
       <Banner query={query} handleInputChange={handleInputChange}/>
       
       <div className='bg-[#FAFAFA] md:grid grid-cols-4 gap-4 lg:px-24 px-4 py-12'>
@@ -131,6 +134,7 @@ const itemsPerPage = 6;
           
    
       </div>
+      <Footer/>
     </div>
   )
 }
